@@ -9,10 +9,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   ///Login details
   String emailCred = "abhi@gmail.com";
   String passwordCred = "123456";
@@ -36,6 +36,16 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading2 = false;
 
   bool isError = false;
+  void facePresent(bool Present) async {
+    await Future.delayed(
+      const Duration(milliseconds: 2000),
+    );
+    if (Present) {
+      success?.change(true);
+    } else {
+      fail?.change(true);
+    }
+  }
 
   @override
   void initState() {
@@ -115,57 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //       color: Colors.grey[200],
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       border: Border.all(
-                    //           color:
-                    //               isError ? Colors.red : Colors.transparent)),
-                    //   padding: const EdgeInsets.symmetric(
-                    //     horizontal: 16,
-                    //     vertical: 8,
-                    //   ),
-                    //   child: TextField(
-                    //     focusNode: emailFocusNode,
-                    //     controller: emailCtr,
-                    //     decoration: const InputDecoration(
-                    //       border: InputBorder.none,
-                    //       hintText: "Email",
-                    //     ),
-                    //     style: Theme.of(context).textTheme.bodyMedium,
-                    //     onChanged: (value) {
-                    //       look?.change(value.length.toDouble());
-                    //     },
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 8),
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //       color: Colors.grey[200],
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       border: Border.all(
-                    //           color:
-                    //               isError ? Colors.red : Colors.transparent)),
-                    //   padding: const EdgeInsets.symmetric(
-                    //     horizontal: 16,
-                    //     vertical: 8,
-                    //   ),
-                    // child: TextField(
-                    //   focusNode: passwordFocusNode,
-                    //   controller: passwordCtr,
-                    //   decoration: const InputDecoration(
-                    //     border: InputBorder.none,
-                    //     hintText: "Password",
-                    //   ),
-                    //   obscureText: true,
-                    //   style: Theme.of(context).textTheme.bodyMedium,
-                    //   onChanged: (value) {
-                    //     look?.change(value.length.toDouble());
-                    //   },
-                    // ),
-                    // ),
-                    // const SizedBox(height: 32),
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 64,
