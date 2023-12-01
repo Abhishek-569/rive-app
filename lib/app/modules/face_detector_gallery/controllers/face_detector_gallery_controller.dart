@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:ml_kit_face_dtector/login_screen.dart';
 
 class FaceDetectorGalleryController extends GetxController {
   //TODO: Implement HomeController
@@ -66,6 +67,8 @@ class FacePainter extends CustomPainter {
     print(faces);
     if (faces.length > 0) {
       print("face is present");
+      LoginScreen loginScreen = LoginScreen();
+      loginScreen.facePresent(true);
     } else {
       print("face not present");
     }
