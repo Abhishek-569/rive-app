@@ -1,4 +1,3 @@
-
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,43 +7,38 @@ import 'package:logger/logger.dart';
 
 class FaceDetectorGalleryController extends GetxController {
   //TODO: Implement HomeController
-  var logger=Logger();
-  var selectedImagePath=''.obs;
-  var extractedBarcode=''.obs;
+  var logger = Logger();
+  var selectedImagePath = ''.obs;
+  var extractedBarcode = ''.obs;
   RxBool isLoading = false.obs;
-XFile ?iimageFile;
-List<Face> ?facess;
-ui.Image ?iimage;
+  XFile? iimageFile;
+  List<Face>? facess;
+  ui.Image? iimage;
 
-Future <void>getImageAndDetectFaces() async {
-  final  imageFile = (await ImagePicker().pickImage(source: ImageSource.gallery)) ;
+  Future<void> getImageAndDetectFaces() async {
+    final imageFile =
+        (await ImagePicker().pickImage(source: ImageSource.gallery));
 //var imageFilee=imageFile.toFile();
     isLoading.value = true;
 
-  final image = InputImage.fromFilePath(imageFile!.path) ;
-  final faceDetector = GoogleMlKit.vision.faceDetector(
-      FaceDetectorOptions(
-          performanceMode: FaceDetectorMode.fast, enableLandmarks: true));
-  List<Face> faces = await faceDetector.processImage(image);
-      iimageFile = imageFile;
-      facess = faces;
-      _loadImage(imageFile);
+    final image = InputImage.fromFilePath(imageFile!.path);
+    final faceDetector = GoogleMlKit.vision.faceDetector(FaceDetectorOptions(
+        performanceMode: FaceDetectorMode.fast, enableLandmarks: true));
+    List<Face> faces = await faceDetector.processImage(image);
+    iimageFile = imageFile;
+    facess = faces;
+    _loadImage(imageFile);
 
-   update();
+    update();
+  }
 
-}
+  _loadImage(XFile file) async {
+    final data = await file.readAsBytes();
+    await decodeImageFromList(data).then((value) => iimage = value);
+    isLoading.value = false;
 
-_loadImage(XFile file) async {
-  final data = await file.readAsBytes();
-  await decodeImageFromList(data).then(
-        (value) =>
-
-          iimage = value);
-          isLoading.value = false;
-
-update();
-}
-
+    update();
+  }
 
   @override
   void onInit() {
@@ -60,14 +54,21 @@ update();
   void onClose() {
     super.onClose();
   }
-
 }
+
 class FacePainter extends CustomPainter {
   final ui.Image image;
   final List<Face> faces;
   final List<Rect> rects = [];
 
   FacePainter(this.image, this.faces) {
+    print("faces in the image are----->");
+    print(faces);
+    if (faces.length > 0) {
+      print("face is present");
+    } else {
+      print("face not present");
+    }
     for (var i = 0; i < faces.length; i++) {
       rects.add(faces[i].boundingBox);
     }
